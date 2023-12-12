@@ -6,7 +6,8 @@ const app = express();
 const port = process.env.PORT;
 // nhúng pug
 app.set('view engine', 'pug');
-app.set("views", "./views");
+// app.set("views", "./views");
+app.set('views', `${__dirname}/views`)
 // router
 // truyền biến app sang router.index
 router(app)
