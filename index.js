@@ -10,6 +10,7 @@ app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views`)
 // router
 // truyền biến app sang router.index
+app.use(express.static("public"))
 router(app)
 app.listen(port,()=>{
   console.log('Lắng Nghe Cổng ',port);

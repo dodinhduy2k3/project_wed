@@ -1,3 +1,20 @@
 extends ../../layouts/default.pug
-block main 
-    h1 Trang Danh Sách sản Phẩm 
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Danh Sách Sản Phẩm")
+          
+    .row
+      .col-4.md-3
+        .product-item
+          .inner-image
+            img(src="/img/logo.svg", alt="")
+          .inner-content
+            h3.inner-title ipone
+            .inner-price-new 80
+            .inner-price-old 100
+            .inner-discount -20
+
