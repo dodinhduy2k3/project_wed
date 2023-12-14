@@ -2,6 +2,7 @@ const express = require('express');
 const database = require('./config/database')
 const router = require("./router/client/index.router")
 const routeradmin = require('./router/admin/index.router');
+const systemConfig = require('./config/system')
 
 require('dotenv').config()
 database.connect()
@@ -16,6 +17,7 @@ app.set('views', `${__dirname}/views`)
 // truyền biến app sang router.index
 // app.use(express.static("public"))
 app.use(express.static(`${__dirname}/public`))
+app.locals.prefixAdmin = systemConfig.PREFIX_ADMIN
 router(app)
 routeradmin(app)
 app.listen(port,()=>{
