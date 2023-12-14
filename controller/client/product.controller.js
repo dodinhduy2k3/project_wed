@@ -1,6 +1,9 @@
 const Product = require('../../model/product.model')
 module.exports.index = async (req,res)=>{
-    const products = await Product.find({})
+    const products = await Product.find({
+        deleted : false,
+        status: "active"
+    })
 
     // console.log(products)
     const newProducts = products.map(item =>{
