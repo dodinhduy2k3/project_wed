@@ -1,6 +1,8 @@
 const express = require('express');
 const database = require('./config/database')
 const router = require("./router/client/index.router")
+const routeradmin = require('./router/admin/index.router');
+
 require('dotenv').config()
 database.connect()
 // console.log(process.env) 
@@ -15,6 +17,7 @@ app.set('views', `${__dirname}/views`)
 // app.use(express.static("public"))
 app.use(express.static(`${__dirname}/public`))
 router(app)
+routeradmin(app)
 app.listen(port,()=>{
   console.log('Lắng Nghe Cổng ',port);
 })
