@@ -43,10 +43,19 @@ module.exports.index = async (req, res) => {
     // console.log(req.query.status)
     let find = {
         deleted: false,
+       
     }
-    find.status = "active";
+    // find.status = "active";
     if (req.query.status) {
         find.status = req.query.status
+    }
+    let keyword = ""
+    
+    if (req.query.keyword) {
+        keyword = req.query.keyword
+        const regex = new RegExp(keyword,"i")
+        console.log(regex)
+        find.title = regex
     }
     const products = await Product.find(find)
     // console.log(products)
@@ -54,8 +63,9 @@ module.exports.index = async (req, res) => {
     res.render("admin/page/products/index.pug", {
         pagetitle: "Trang Danh Sách Sản Phẩm ",
         products: products,
-        // trả biến filterStatus cho gioa diện
-        filterStatus : filterStatus
+        // trả biến filterStatus cho gioa di
+        filterStatus : filterStatus,
+        keyword : keyword
     });
 
 }
