@@ -57,7 +57,23 @@ module.exports.index = async (req, res) => {
         console.log(regex)
         find.title = regex
     }
-    const products = await Product.find(find)
+    let objectPaginations = {
+        currentPage: 1,
+        limitItem:4
+    };
+
+    if (req.query.page){
+       objectPaginations.currentPage = parseInt(req.query.page)
+
+    }
+    objectPaginations.skip=(objectPaginations.currentPage -1 ) * objectPaginations.limitItem
+
+    
+    const products = await Product.find(find).limit(objectPaginations.limitItem).skip(objectPaginations.skip)
+
+    const countProduct = await Product.countDocuments(find)
+    objectPaginations.totalPage = Math.ceil(countProduct / objectPaginations.limitItem)
+    // console.log(totalPage)
     // console.log(products)
     // console.log(newProducts)
     res.render("admin/page/products/index.pug", {
@@ -65,7 +81,8 @@ module.exports.index = async (req, res) => {
         products: products,
         // trả biến filterStatus cho gioa di
         filterStatus : filterStatus,
-        keyword : keyword
+        keyword : keyword,
+        pagination: objectPaginations
     });
 
 }

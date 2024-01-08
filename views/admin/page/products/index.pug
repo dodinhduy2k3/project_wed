@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
 block main 
     h1 Trang Danh Sách Sản Phẩm
     .card.mb-3 
@@ -6,11 +7,7 @@ block main
         .card-body 
             .row 
                 .col-6 
-                    each item in filterStatus 
-                        button(
-                        class=`btn btn-sm ml-1 btn-outline-success ${item.class} `
-                        button-status= item.status
-                    ) #{item.name}
+                    +filter-status(filterStatus)
                 .col-6 
                     form(action=""
                         id="form-search"
@@ -59,5 +56,36 @@ block main
                             td 
                                 button(class="btn btn-warning btn-sm") Sửa 
                                 button(class="btn btn-danger btn-sm") Xóa 
-
-
+    div #{pagination.currentPage}
+    nav 
+        ul(class="pagination")
+            if(pagination.currentPage > 1)
+                li(class="page-item")
+                    button(
+                        class="page-link"
+                        button-pagination= 1
+                        ) Đầu Trang 
+            if(pagination.currentPage > 1)
+                li(class="page-item")
+                    button(
+                        class="page-link"
+                        button-pagination=pagination.currentPage-1
+                        ) Trang Trước
+            - for (var i = pagination.currentPage - 1  ;i <= pagination.currentPage+1 ;i++)
+                li(class=`page-item ${pagination.currentPage ==i ? "active" : "" }`)
+                    button(
+                        class="page-link"
+                        button-pagination=i
+                        ) #{i}
+            if(pagination.currentPage < pagination.totalPage)
+                li(class="page-item")
+                    button(
+                        class="page-link"
+                        button-pagination=pagination.currentPage + 1
+                        ) kế Tiếp
+            if(pagination.currentPage > 1)
+                li(class="page-item")
+                    button(
+                        class="page-link"
+                        button-pagination=pagination.totalPage
+                        ) Cuối Trang
